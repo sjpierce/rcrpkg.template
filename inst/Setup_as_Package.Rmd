@@ -1,0 +1,203 @@
+---
+title: "Setup a Research Compendium R Package"
+author: "Steven J. Pierce"
+date: "`r format(Sys.time(), '%Y-%m-%d, %H:%M:%S %Z')`"
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    code_folding:  show
+---
+
+# Purpose
+This script illustrates the process of taking a new repository created from 
+the research compendium R package template located at 
+https://github.com/sjpierce/rcrpkg.template.git 
+and turning it into a full R package. It is intended to be a script that you
+use interactively. Examine each section below, look at what the next chunk does,
+edit is desired, and then run it. You will need to manually edit some of the 
+files created by certain chunks below. 
+
+# Setup
+Set global R chunk options (local chunk options will over-ride global options). 
+We can temporarily disable an individual chunk by setting `eval = FALSE`. 
+
+``` {r global-options}
+# Global chunk options (over-ridden by local chunk options)
+knitr::opts_chunk$set(include  = TRUE, eval = TRUE, echo = TRUE, error = TRUE, 
+                      message = TRUE, warning = TRUE)
+
+# Declare path to this script relative to the project root directory.
+here::i_am(path = "inst/Setup_as_Package.Rmd")
+```
+
+```{r install-packages-1, eval=FALSE}
+# Packages required by the functions defined in "R/Utility_Functions.R"
+install.packages("assertthat")  
+install.packages("git2r")  
+install.packages("here")  
+install.packages("tinytex") 
+```
+
+```{r install-packages-2, eval=FALSE}
+# Packages we load below (that are not already in the list above)
+install.packages("available") 
+install.packages("devtools")
+install.packages("fs")
+install.packages("here")  
+install.packages("usethis") 
+```
+
+Next we load R packages required for this script to work. 
+
+```{r load-packages}
+# Load some packages
+library(available)  # for available()
+library(devtools)   #  
+library(fs)         # for dir_create()
+library(here)       # for here(), i_am()
+library(usethis)    # 
+```
+
+# Check Candidate Package Names
+There are some conventions for naming R packages that you should probably comply 
+with. You can use the available package's `available()` function to check 
+candidate names for you package. 
+
+```{r check-pkg-names, eval = FALSE}
+# Check availability of the intended package name. 
+available("insert.your.package.name")
+```
+
+# Create a DESCRIPTION File
+An R package must have a file called `DESCRIPTION` in the root folder. This file 
+holds meta-data about the package. The `create-DESCRIPTION` chunk below will 
+create a bare-bones file for you, but then you need to edit that file. In 
+particular, you should edit the author, title, and description fields. There is
+section of the this script below that will help with the license field. You 
+should track the `DESCRIPTION` file in Git. 
+
+```{r create-DESCRIPTION, eval = FALSE}
+# Create a DESCRIPTION file. Once it is created, you need to go edit it and 
+# then commit it into Git. Make sure you list authors and their roles.
+use_description(check_name = TRUE)
+```
+
+# Create README.Rmd and README.md Files 
+It is very useful for an R pacakge to have README files, which are described 
+at https://r-pkgs.org/release.html#important-files. You can use the 
+`create-README` chunk below to set up the initial `README.Rmd` file. You can 
+edit that file and then knit it to produce the `README.md` file. You should 
+track both the `README.Rmd` and `README.md` files in Git. 
+
+```{r create-README, eval = FALSE}
+# Create a README.Rmd file that will knit to README.md.  
+use_readme_rmd()
+```
+
+# Create a NEWS.md File 
+You should consider using a `NEWS.md` file to record key changes to your 
+package. See discussion of such files at https://r-pkgs.org/release.html#news. 
+The `create-NEWS` chunk below will set up basic file for you, then you just need 
+to edit it as you create new versions of your package. You should track the 
+`NEWS.md` file in Git. 
+
+```{r create-NEWS, eval = FALSE}
+# Create a NEWS.md file we can use to log changes associated with each version.
+# Once it is created, you need to go edit it and then commit it into Git. 
+use_news_md()
+```
+
+# Create Package-Level Help Documentation
+You probably want to do this after you have edited the `DESCRIPTION` file.
+
+```{r create-pkg-help, eval = FALSE}
+# Create a dummy .R file in the "R" subfolder that will prompt roxygen to 
+# generate basic package-level documentation.
+use_package_doc()
+```
+
+# Create or Update Help Files and NAMESPACE File
+
+```{r create-NAMESPACE, eval = FALSE}
+# Create a NAMESPACE file. Once it is created, you commit it into Git. 
+# When DESCRIPTION changes, or when you add new custom functions in the "R"
+# subfolder, you should re-run this document() command and commit the updated
+# NAMESPACE and help files in the "man" subfolder file to Git. 
+document()
+```
+
+# Create a Folder for External Data Files
+I use the conventional R package structure that calls for placing external data
+files (i.e., those not stored as .Rdata or .Rds files) in a subfolder called 
+`inst/extdata`. The `create-extdata-placeholder` chunk below automates adding a
+simple text file called `inst/extdata/Placeholder.txt`. If you want to make sure
+someone else cloning your repository will have that folder, just run the chunk 
+and then track that file with Git. 
+
+```{r create-extdata-placeholder}
+# Create the folder
+dir_create(path = here("inst/extdata"))
+
+# Write out the placeholder file. 
+Placeholder.txt <- file(here("inst/extdata/Placeholder.txt"))
+Content <- paste("Tracking this file in Git automates creating the folder it", 
+                 "is in when the repository is cloned.")
+writeLines(text = Content, con = Placeholder.txt)
+close(Placeholder.txt)
+```
+
+# Choose a Software License for the Package
+If you do not want to make your package open source (at this time), you can use
+the `choose-proprietary-license` chunk below to indicate that you are reserving 
+all rights to the copyright holders. You can always change the license later. 
+
+```{r choose-proprietary-license, eval = FALSE}
+# Until otherwise decided, we will assume a proprietary license rather than an
+# open-source license. 
+use_proprietary_license(copyright_holder)
+```
+
+On the other hand, if you are using the package as a research compendium that 
+you intend to publish, you may want to use the open-source GNU General Public 
+License version 3 ([GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html)) or 
+or higher for the source code and license all other content under the Creative 
+Commons Attribution-ShareAlike 4.0 International 
+[CC BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)) license. I use
+those options to promote reproducible research. You can use the 
+`choose-GPL3-and-CC-BY-SA-4` chunk below to do that. After running the chunk, 
+edit your `DESCRIPTION` file to make the license field read as 
+follows: `License: GPL (>= 3) + file LICENSE`. 
+
+```{r choose-GPL3-and-CC-BY-SA-4, eval = FALSE}
+# Choose the GPL (>= 3) license
+use_gpl_license(version = 3, include_future = TRUE)
+
+# Download the GPL3 license to a file called LICENSE.md
+download.file(url = "https://www.gnu.org/licenses/gpl-3.0.txt", 
+              destfile = here("LICENSE.md"))
+
+# Write out a LICENSE.note file. 
+LICENSE.note <- file(here("LICENSE.note"))
+writeLines(c("Source code in this package falls under the GPL (>= 3) license ",
+             "(see https://www.gnu.org/licenses/gpl-3.0.en.html or the ",
+             "LICENSE.md file). All other contents are licensed under the CC ",
+             "BY-SA-4.0 license (see https://creativecommons.org/licenses/by-sa/4.0/ ",
+             "or the LICENSE file)."), 
+           LICENSE.note)
+close(LICENSE.note)
+
+# Write out a LICENSE file. 
+download.file(url = "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt", 
+              destfile = here("LICENSE"))
+```
+
+# Software Information
+Show information about the current software environment. 
+
+``` {r show-version, eval=FALSE}
+# Get R and R package version numbers in use.
+session_info()
+```
