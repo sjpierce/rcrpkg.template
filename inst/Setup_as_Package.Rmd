@@ -90,7 +90,9 @@ It is very useful for an R pacakge to have README files, which are described
 at https://r-pkgs.org/release.html#important-files. You can use the 
 `create-README` chunk below to set up the initial `README.Rmd` file. You can 
 edit that file and then knit it to produce the `README.md` file. You should 
-track both the `README.Rmd` and `README.md` files in Git. 
+track both the `README.Rmd` and `README.md` files in Git. For an example of 
+what I put in these files for a pacakge used as a research compendium, see 
+https://github.com/sjpierce/SSACHR. 
 
 ```{r create-README, eval = FALSE}
 # Create a README.Rmd file that will knit to README.md.  
