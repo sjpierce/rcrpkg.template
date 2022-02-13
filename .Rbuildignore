@@ -1,0 +1,20 @@
+# Automatically added by RStudio (ignores the RStudio project file).
+^.*\.Rproj$
+
+# Used for temporary files.
+^\.Rproj\.user$
+
+# Omit the Rmarkdown file used to generate README.md.
+^README\.Rmd$
+
+# Omit folders created by building vignettes.
+^doc$
+^Meta$
+
+# Omit log files created by knitting to PDF.
+^inst/*.log
+
+# Omit any software license files.
+^LICENSE\.md$
+^LICENSE
+^LICENSE\.note$
