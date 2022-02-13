@@ -129,6 +129,23 @@ use_package_doc()
 document()
 ```
 
+# Create a Folder for Data
+I use the conventional R package structure that calls for storing .Rdata and 
+.Rds files in a subfolder called `data`. The `create-data-folder` chunk below
+will create the folder for you. 
+
+```{r create-data-placeholder}
+# Create the folder
+dir_create(path = here("data"))
+
+# Write out the placeholder file. 
+Placeholder.txt <- file(here("data/Placeholder.txt"))
+Content <- paste("Tracking this file in Git automates creating the folder it", 
+                 "is in when the repository is cloned.")
+writeLines(text = Content, con = Placeholder.txt)
+close(Placeholder.txt)
+```
+
 # Create a Folder for External Data Files
 I use the conventional R package structure that calls for placing external data
 files (i.e., those not stored as .Rdata or .Rds files) in a subfolder called 
