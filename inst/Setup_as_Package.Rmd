@@ -64,12 +64,52 @@ library(usethis)    #
 # Check Candidate Package Names
 There are some conventions for naming R packages that you should probably comply 
 with. You can use the available package's `available()` function to check 
-candidate names for you package. 
+candidate names for you package. This particular function should actually be
+used before you create a new repository from the `rcrpkg.template` because you
+want to give the new repository a sensible name from the beginning rather than
+have to change it later!
 
 ```{r check-pkg-names, eval = FALSE}
 # Check availability of the intended package name. 
 available("insert.your.package.name")
 ```
+
+# Create a New Repository Using the Template
+On GitHub, you can create a new repository by copying from a template, such as 
+my `rcrpkg.template` repository. I think other users should be able to fork and 
+clone that repository to their own GitHub accounts, then use it as a template 
+themselves. 
+
+- Login to GitHub.
+- For users other than myself, I think you would have to start by forking and 
+  cloning my `rcrpkg.template` repository to make it available in your own 
+  GitHub account. I haven't figured out a way to make the GitHub web interface
+  let me try applying a template from another user's account. I'll have to test
+  with a colleague to see whether that is possible. 
+- Start the process of creating a new repository by visiting 
+  https://github.com/new. 
+- Use the *Repository template* control to select the `rcrpkg.template`.
+- Fill in your new package's name in the *Repository name* box. 
+- Add a description.
+- Select whether you want the repository to be public or private. 
+- Click the *Create repository* button. 
+
+That will add the new repository to your GitHub account.
+
+# Clone the New Repository to Your Computer
+Use Git to clone your new repository to your local computer. I use R Studio to
+do that with the process described at
+https://happygitwithr.com/new-github-first.html#new-rstudio-project-via-git. 
+
+# Rename the R Studio Project File to Match your Repository Name
+Your new repository will include an R Studio project file called 
+`rcrpkg.template.Rproj` that it inherited from the `rcrpkg.template` repository. 
+You will need to rename that file so it matches the name you chose for your new 
+repository. So if your new repository is called `MyStudy` you would rename 
+`rcrpkg.template.Rproj` to `MyStudy.Rproj`. 
+
+Afterward, use the project file to open your project in R Studio. The remainder 
+of this script assumes you have that project file open already. 
 
 # Create a DESCRIPTION File
 An R package must have a file called `DESCRIPTION` in the root folder. This file 
