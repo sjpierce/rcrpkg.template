@@ -7,6 +7,11 @@ format:
     output-ext: "pdf"
     documntclass: scrreprt
     papersize: letter
+    geometry: 
+      - top=1in
+      - bottom=1in
+      - left=1in
+      - right=1in
     toc: true
     toc-depth: 3
     number-sections: true
