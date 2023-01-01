@@ -1,5 +1,5 @@
 ---
-title: "Example Script for Rendering PDF Output"
+title: \sffamily{\bfseries{Example Script for Rendering PDF Output\LARGE}}
 author: "Steven J. Pierce"
 params:
   LogFile: "Example_Render_to_PDF.pdf"
@@ -47,6 +47,13 @@ format:
           \renewcommand{\headrulewidth}{0.4pt}
           \renewcommand{\footrulewidth}{0.4pt}
           \fancypagestyle{plain}{\pagestyle{fancy}}
+          \newcommand*\tocentryformat[1]{{\sffamily#1}}  %% Fix TOC font style
+          \RedeclareSectionCommands                      %% Fix TOC font style
+            [
+              tocentryformat=\tocentryformat,
+              tocpagenumberformat=\tocentryformat
+            ]
+            {section,subsection,subsubsection,paragraph,subparagraph}
 execute:
   eval: true
   echo: fenced
