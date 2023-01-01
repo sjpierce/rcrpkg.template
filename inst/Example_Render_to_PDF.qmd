@@ -41,7 +41,6 @@ format:
           \pagestyle{fancy}
           \lhead{Left header text }
           \rhead{\today\ \currenttime}
-          \lfoot{\texttt{\small \detokenize{`r params$LogFile`}}} 
           \cfoot{ }
           \fancyfoot[R]{\thepage\ of \pageref*{LastPage}}
           \renewcommand{\headrulewidth}{0.4pt}
@@ -58,6 +57,8 @@ knitr:
   opts_chunk: 
     message: true
 ---
+
+\lfoot{\texttt{\small \detokenize{`r params$LogFile`}}} 
 
 \FloatBarrier
 
