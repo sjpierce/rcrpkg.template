@@ -17,6 +17,34 @@ format:
     number-sections: true
     number-depth: 3
     colorlinks: true
+    include-in-header: 
+      - file: compact-title.tex
+      - text: | 
+          \usepackage{fancyhdr}
+          \usepackage[yyyymmdd,hhmmss]{datetime}
+          \usepackage{lastpage}
+          \usepackage{fontspec}
+          \defaultfontfeatures{Ligatures=TeX}
+          \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
+          \usepackage{url}
+          \usepackage{placeins}
+          \usepackage{booktabs}
+          \usepackage{longtable}
+          \usepackage{dcolumn}
+          \usepackage{titling}
+          \usepackage{threeparttable}
+          \usepackage{threeparttablex}
+          \pretitle{\begin{center}\LARGE\bfseries}
+          \posttitle{\end{center}}
+          \pagestyle{fancy}
+          \lhead{Left header text }
+          \rhead{\today\ \currenttime}
+          \lfoot{\texttt{\small \detokenize{`r params$LogFile`}}} 
+          \cfoot{ }
+          \fancyfoot[R]{\thepage\ of \pageref*{LastPage}}
+          \renewcommand{\headrulewidth}{0.4pt}
+          \renewcommand{\footrulewidth}{0.4pt}
+          \fancypagestyle{plain}{\pagestyle{fancy}}
 execute:
   eval: true
   echo: fenced
