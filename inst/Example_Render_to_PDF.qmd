@@ -178,9 +178,9 @@ FN <- "This is the footnote."
 MyData <- data.frame(x = 1:5, y = 2:6, z = 3:7, a = 4:8) 
 
 # Create a table and add a footnote. 
-kable(MyData, format = "latex") %>% 
-  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-           threeparttable = TRUE)
+kable(MyData, format = "latex") #%>% 
+  #footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+  #         threeparttable = TRUE)
 ```
 
 ::: {.callout-tip}
