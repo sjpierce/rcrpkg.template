@@ -1,9 +1,6 @@
 ---
 title: "Example Script for Rendering PDF Output"
 author: "Steven J. Pierce"
-date: now
-date-modified: last-modified
-date-format: YYYY-MM-DD HH:mm:ss z
 format: 
   pdf:
     documntclass: scrreprt
