@@ -1,6 +1,8 @@
 ---
 title: "Example Script for Rendering PDF Output"
 author: "Steven J. Pierce"
+params:
+  LogFile: "Example_Render_to_PDF.pdf"
 format: 
   pdf:
     output-file: "Example_Render_to_PDF.pdf"
