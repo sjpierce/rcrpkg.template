@@ -17,7 +17,15 @@ format:
     embed-resources: true 
     anchor-sections: true
 execute:
+  eval: true
   echo: fenced
+  output: true
+  warning: true
+  error: true
+  include: true
+knitr:
+  opts_chunk: 
+    message: true
 ---
 
 # Purpose
@@ -30,15 +38,12 @@ edit is desired, and then run it. You will need to manually edit some of the
 files created by certain chunks below. 
 
 # Setup
-Set global R chunk options (local chunk options will over-ride global options). 
-We can temporarily disable an individual chunk by setting `#| eval = FALSE`. 
+Global R chunk options are defined in the YAML header but local chunk options 
+will over-ride global options. We can temporarily disable an individual chunk by 
+inserting `#| eval = FALSE` on a line at the top of the chunk. 
 
 ``` {r}
-#| label: global-options
-
-# Global chunk options (over-ridden by local chunk options)
-knitr::opts_chunk$set(include  = TRUE, eval = TRUE, echo = TRUE, error = TRUE, 
-                      message = TRUE, warning = TRUE)
+#| label: declare-path
 
 # Declare path to this script relative to the project root directory.
 here::i_am(path = "inst/Setup_as_Package.qmd")
