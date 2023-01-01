@@ -29,6 +29,7 @@ format:
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
           \usepackage{url}
+          \usepackage{verbatim}         %% For the comment command
           \usepackage{placeins}
           \usepackage{booktabs}
           \usepackage{longtable}
@@ -57,6 +58,33 @@ knitr:
   opts_chunk: 
     message: true
 ---
+
+\begin{comment}
+# Hidden: Notes for User
+This script makes use of the LaTeX `verbatim` package's `\comment` command to
+build in hidden headings and text that are here for the team preparing the
+report but will be omitted from the knitted PDF output file. This makes it
+easier to put important comments directly in the file while still creating fully
+formatted output that only shows the desired content. So, text inside a comment
+block will be omitted from the PDF output.
+
+We can also use code chunks with chunk options such as `#| include: false`, 
+`#| echo: false`, `#| message: false`, `#| warning: false` and so on to 
+precisely control what R output shows up in the final PDF file. Thus, a script 
+file can both serve as process documentation and efficiently generate the final 
+version of a report output by applying the reproducible research and literate
+programming concepts and tools. 
+
+The `\lfoot` command just below sets the left footer to match the script's 
+`LofgFile` parameter value, which we can pass along when rendering the script. 
+Ideally it would be in the YAML `include-in-header:` with other pieces, but
+I can't get inline code to work if I do it that way. This is the only way I 
+could get the filename-based footer to work. 
+
+The LaTeX `placeins` pacakg provides the `\FloatBarrier` command. Using that 
+before section headings help keep the figures and tables in their respective 
+sections. 
+\end{comment}
 
 \lfoot{\texttt{\small \detokenize{`r params$LogFile`}}} 
 
