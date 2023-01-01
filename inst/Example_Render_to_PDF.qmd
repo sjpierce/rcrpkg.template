@@ -156,11 +156,11 @@ This is an example of an warning callout without a caption.
 This is an example of a tip callout with a caption.
 :::
 
-::: {.callout-caution collapse="true"}
-# Caution: Expand To Learn About Collapse
-This is an example of a 'folded' caution callout that can be expanded by the
-user. You can use `collapse="true"` to collapse it by default or
-`collapse="false"` to make a collapsible callout that is expanded by default.
+::: {.callout-caution}
+# Caution: Collapse option does not work in PDF output
+In PDF output, callouts created with `collapse="true"` just get expanded as if
+you had used `collapse="false"`. There is no way to make an interactive, 
+expandable callout in this output format.
 :::
 
 
