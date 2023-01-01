@@ -3,6 +3,8 @@ title: "Example Script for Rendering PDF Output"
 author: "Steven J. Pierce"
 format: 
   pdf:
+    output-file: "Example_Render_to_PDF.pdf"
+    output-ext: "pdf"
     documntclass: scrreprt
     papersize: letter
     toc: true
