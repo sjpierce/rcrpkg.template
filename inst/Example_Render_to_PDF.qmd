@@ -185,23 +185,31 @@ See @tbl-Test for an example of the table created below.
 
 ```{r}
 #| label: tbl-Test
-#| tbl-cap: Here's a Simple Table Caption.
-
+#| tbl-cap: Table Caption Via Chunk Option. 
 FN <- "This is the footnote."
 
 # Create some data.
 MyData <- data.frame(x = 1:5, y = 2:6, z = 3:7, a = 4:8) 
 
-# Create a table and add a footnote. 
-kable(MyData, format = "latex") #%>% 
-  #footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
-  #         threeparttable = TRUE)
+# Create a table and bold the first row, and add a footnote. 
+kable(MyData, format = "latex", booktabs = TRUE) %>% 
+  row_spec(row = 1, bold = TRUE) %>% 
+  footnote(general = FN, general_title = "Note: ", footnote_as_chunk = TRUE,
+           threeparttable = FALSE)
 ```
 
 ::: {.callout-tip}
 ## Tip: Setting the Table Caption
 Use the `tbl-cap` chunk option to set the table caption rather than using the 
-`caption = ` argument to `kable()`. 
+`caption = ` argument to `kable()`. The latter causes rendering problems. 
+:::
+
+::: {.callout-caution}
+## kableExtra in PDF output
+It looks like kableExtra footnotes work in PDF output from Quarto documents if 
+`threeparttable = FALSE`, but that makes the table wider rather than wrapping 
+long footnotes to match the table width. Setting `threeparttable = TRUE` breaks 
+rendering. The latter setting works fine in R Markdown documents.
 :::
 
 \FloatBarrier
