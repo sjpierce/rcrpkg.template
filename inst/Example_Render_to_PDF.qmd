@@ -30,13 +30,13 @@ format:
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
           \usepackage{url}
           \usepackage{verbatim}         %% For the comment command
-          \usepackage{placeins}
-          \usepackage{booktabs}
-          \usepackage{longtable}
+          \usepackage{placeins}         %% For FloatBarrier command
+          \usepackage{booktabs}         %% Used by kableExtra
+          \usepackage{longtable}        %% Used by kableExtra
           \usepackage{dcolumn}
           \usepackage{titling}
-          \usepackage{threeparttable}
-          \usepackage{threeparttablex}
+          \usepackage{threeparttable}   %% Used by kableExtra
+          \usepackage{threeparttablex}  %% Used by kableExtra
           \pretitle{\begin{center}\LARGE\bfseries}
           \posttitle{\end{center}}
           \pagestyle{fancy}
