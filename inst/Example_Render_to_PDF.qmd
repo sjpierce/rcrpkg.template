@@ -59,10 +59,14 @@ knitr:
     message: true
 ---
 
+\FloatBarrier
+
 # Purpose
 This script provides a template example you can use to jump-start creating a 
 new report that writes PDF output. It illustrates some convenient features of
 Quarto.
+
+\FloatBarrier
 
 # Setup
 Global R chunk options are defined in the YAML header but local chunk options 
@@ -121,19 +125,29 @@ options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)   
 ```
 
+\FloatBarrier
+
 # Heading Level 1
 Put text here. 
+
+\FloatBarrier
 
 ## Heading Level 2
 Put text here. 
 
+\FloatBarrier
+
 ### Heading Level 3
 Put text here. 
+
+\FloatBarrier
 
 #### Heading Level 4
 The `toc-depth: 3` option in YAML means this heading is omitted from the side 
 menu. The `number-depth: 3` option in YAML is why this heading lacks a section
 number. 
+
+\FloatBarrier
 
 # Examples of Callouts
 These are examples of how to use callouts in Quarto documents. 
@@ -163,7 +177,7 @@ you had used `collapse="false"`. There is no way to make an interactive,
 expandable callout in this output format.
 :::
 
-
+\FloatBarrier
 
 # Example Table
 See @tbl-Test for an example of the table created below. 
@@ -189,6 +203,8 @@ Use the `tbl-cap` chunk option to set the table caption rather than using the
 `caption = ` argument to `kable()`. 
 :::
 
+\FloatBarrier
+
 # Example Figure
 Below is @fig-example, which is pretty simple. 
 
@@ -208,7 +224,9 @@ Use the `fig-cap` chunk option to set the figure caption. Here you can see the
 use of `!expr` preceding inline r code that computes a dynamic caption. 
 :::
 
-# Exaple Graphvis Diagram
+\FloatBarrier
+
+# Example Graphvis Diagram
 Here is an example diagram. Notice that it does not get a Figure number by 
 default. We can also just use the `DiagrammeR` package to generate a figure 
 that gets numbered. 
@@ -218,6 +236,8 @@ digraph D {
   A -> {B, C, D} -> {F}
 }
 ```
+
+\FloatBarrier
 
 # Software Information
 Show information about the current software environment. We could put the 
