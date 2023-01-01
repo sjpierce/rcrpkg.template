@@ -67,10 +67,25 @@ Quarto.
 # Setup
 Global R chunk options are defined in the YAML header but local chunk options 
 will over-ride global options. We can temporarily disable an individual chunk by 
-inserting `#| eval = FALSE` on a line at the top of the chunk. 
+inserting `#| eval = FALSE` on a line at the top of the chunk. The method for
+creating a `cfsize` option that controls font size in code chunks and their text
+output is based on an answer to a question posted on
+[stackoverflow.com](https://stackoverflow.com/a/46526740).
 
 ``` {r}
-#| label: declare-path
+#| label: global-options
+#| cfsize: footnotesize
+
+# Create a custom chunk hook/option for controlling font size in chunk & output.
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$cfsize != "normalsize", paste0("\n \\", options$cfsize,"\n\n", 
+                                              x, "\n\n \\normalsize"), x)
+  })
+
+# Global chunk options (over-ridden by local chunk options)
+knitr::opts_chunk$set(cfsize = "footnotesize")
 
 # Declare path to this script relative to the project root directory.
 here::i_am(path = "inst/Example_Render_to_PDF.qmd")
@@ -210,6 +225,7 @@ contents of this section in a collapsed callout instead.
 
 ```{r}
 #| label: show-version
+#| cfsize: scriptsize
 
 # Get R and R package version numbers in use.
 session_info()
