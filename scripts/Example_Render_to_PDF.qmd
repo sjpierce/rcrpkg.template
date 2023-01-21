@@ -302,8 +302,7 @@ digraph D {
 \FloatBarrier
 
 # Software Information
-Show information about the current software environment. We could put the 
-contents of this section in a collapsed callout instead. 
+Show information about the current software environment. 
 
 ```{r}
 #| label: show-version
