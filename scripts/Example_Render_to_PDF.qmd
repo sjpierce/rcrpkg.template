@@ -1,13 +1,20 @@
 ---
 title: \sffamily{\bfseries{Example Script for Rendering PDF Output\LARGE}}
-author: "Steven J. Pierce"
+author: 
+  - name: Steven J. Pierce
+    orcid: 0000-0002-0679-3019
+    email: pierces1@msu.edu
+    affiliations: 
+      - name: Michigan State University, Center for Statistical Training and Consulting
 params:
+  SourceDir: "scripts/"
+  SourceFile: "Example_Render_to_PDF.qmd"
   LogFile: "Example_Render_to_PDF.pdf"
 format: 
   pdf:
     output-file: "Example_Render_to_PDF.pdf"
     output-ext: "pdf"
-    documntclass: scrreprt
+    documntclass: scrartcl
     papersize: letter
     geometry: 
       - top=1in
@@ -19,16 +26,26 @@ format:
     number-sections: true
     number-depth: 3
     colorlinks: true
+    template-partials: 
+      - title.tex
     include-in-header: 
       - file: compact-title.tex
       - text: | 
           \usepackage{fancyhdr}
+          \usepackage[noblocks]{authblk}
+          \renewcommand*{\Authsep}{, }
+          \renewcommand*{\Authand}{, }
+          \renewcommand*{\Authands}{, }
+          \renewcommand\Affilfont{\small}
           \usepackage[yyyymmdd,hhmmss]{datetime}
           \usepackage{lastpage}
           \usepackage{fontspec}
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
           \usepackage{url}
+          \usepackage{floatrow}
+          \floatplacement{figure}{!ht}
+          \floatplacement{table}{!ht}
           \usepackage{verbatim}         %% For the comment command
           \usepackage{placeins}         %% For FloatBarrier command
           \usepackage{booktabs}         %% Used by kableExtra
@@ -120,15 +137,16 @@ output is based on an answer to a question posted on
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
-  ifelse(options$cfsize != "normalsize", paste0("\n \\", options$cfsize,"\n\n", 
-                                              x, "\n\n \\normalsize"), x)
+  ifelse(options$cfsize != "normalsize", 
+         paste0("\n \\", options$cfsize,"\n\n", x, "\n\n \\normalsize"), 
+         x)
   })
 
 # Global chunk options (over-ridden by local chunk options)
 knitr::opts_chunk$set(cfsize = "footnotesize")
 
 # Declare path to this script relative to the project root directory.
-here::i_am(path = "inst/Example_Render_to_PDF.qmd")
+here::i_am(path = "scripts/Example_Render_to_PDF.qmd")
 
 # This message should show in results because of global options in YAML. 
 message("test message")
