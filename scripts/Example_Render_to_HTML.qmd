@@ -42,7 +42,7 @@ inserting `#| eval = FALSE` on a line at the top of the chunk.
 #| label: declare-path
 
 # Declare path to this script relative to the project root directory.
-here::i_am(path = "inst/Example_Render_to_HTML.qmd")
+here::i_am(path = "scripts/Example_Render_to_HTML.qmd")
 
 # This message should show in results because of global options in YAML. 
 message("test message")
