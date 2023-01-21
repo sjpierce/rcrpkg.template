@@ -1,31 +1,31 @@
 ---
-title: "Setup a Research Compendium R Package"
-author: "Steven J. Pierce"
-date: now
-date-modified: last-modified
-date-format: YYYY-MM-DD HH:mm:ss z
+title: "Setup a Research Compendium R Package" 
+author: "Steven J. Pierce" 
+date: now 
+date-modified: last-modified 
+date-format: YYYY-MM-DD HH:mm:ss z 
 format: 
-  html:
-    toc: true
-    toc-depth: 3
-    toc-location: left
-    number-sections: true
-    number-depth: 3
-    code-fold: show
-    code-tools: true
-    code-line-numbers: true
+  html: 
+    toc: true 
+    toc-depth: 3 
+    toc-location: left 
+    number-sections: true 
+    number-depth: 3 
+    code-fold: show 
+    code-tools: true 
+    code-line-numbers: true 
     embed-resources: true 
-    anchor-sections: true
-execute:
-  eval: true
-  echo: fenced
-  output: true
-  warning: true
-  error: true
-  include: true
-knitr:
+    anchor-sections: true 
+execute: 
+  eval: true 
+  echo: fenced 
+  output: true 
+  warning: true 
+  error: true 
+  include: true 
+knitr: 
   opts_chunk: 
-    message: true
+    message: true 
 ---
 
 # Purpose
@@ -46,7 +46,7 @@ inserting `#| eval = FALSE` on a line at the top of the chunk.
 #| label: declare-path
 
 # Declare path to this script relative to the project root directory.
-here::i_am(path = "inst/Setup_as_Package.qmd")
+here::i_am(path = "scripts/Setup_as_Package.qmd")
 ```
 
 ```{r}
