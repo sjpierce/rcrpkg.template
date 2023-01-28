@@ -50,6 +50,8 @@ format:
           \usepackage{placeins}         %% For FloatBarrier command
           \usepackage{booktabs}         %% Used by kableExtra
           \usepackage{longtable}        %% Used by kableExtra
+          \usepackage{array}            %% Used by kableExtra
+          \usepackage{multirow}         %% Used by kableExtra
           \usepackage{dcolumn}
           \usepackage{titling}
           \usepackage{threeparttable}   %% Used by kableExtra
