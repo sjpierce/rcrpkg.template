@@ -38,7 +38,7 @@ format:
           \renewcommand*{\Authands}{, }
           \renewcommand\Affilfont{\small}
           \usepackage[yyyymmdd,hhmmss]{datetime}
-          \usepackage{lastpage}
+          \usepackage{lastpage}         %% For pageref command
           \usepackage{fontspec}
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
@@ -52,6 +52,13 @@ format:
           \usepackage{longtable}        %% Used by kableExtra
           \usepackage{array}            %% Used by kableExtra
           \usepackage{multirow}         %% Used by kableExtra
+          \usepackage{wrapfig}          %% Used by kableExtra
+          \usepackage{colortbl}         %% Used by kableExtra
+          \usepackage{pdflscape}        %% Used by kableExtra
+          \usepackage{tabu}             %% Used by kableExtra
+          \usepackage[normalem]{ulem}   %% Used by kableExtra
+          \usepackage{makecell}         %% Used by kableExtra
+          \usepackage{xcolor}           %% Used by kableExtra
           \usepackage{dcolumn}
           \usepackage{titling}
           \usepackage{threeparttable}   %% Used by kableExtra
@@ -77,12 +84,14 @@ execute:
   eval: true
   echo: fenced
   output: true
+  message: true
   warning: true
   error: true
   include: true
 knitr:
   opts_chunk: 
     message: true
+    cfsize: "scriptsize"
 ---
 
 \begin{comment}
@@ -133,7 +142,7 @@ output is based on an answer to a question posted on
 
 ``` {r}
 #| label: global-options
-#| cfsize: footnotesize
+#| message: true
 
 # Create a custom chunk hook/option for controlling font size in chunk & output.
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
@@ -143,25 +152,37 @@ knitr::knit_hooks$set(chunk = function(x, options) {
          paste0("\n \\", options$cfsize,"\n\n", x, "\n\n \\normalsize"), 
          x)
   })
-
-# Global chunk options (over-ridden by local chunk options)
-knitr::opts_chunk$set(cfsize = "footnotesize")
-
-# Declare path to this script relative to the project root directory.
-here::i_am(path = "scripts/Example_Render_to_PDF.qmd")
-
-# This message should show in results because of global options in YAML. 
-message("test message")
 ```
 
 ``` {r}
-#| label: test-message
+#| label: test-message1
+
+# This message should show in results because of global options in YAML. 
+message("test message 1")
+```
+
+``` {r}
+#| label: test-message2
 #| message: false
 
 # This message should not show in results because of chunk-level options. 
 message("test message 2")
 ```
 
+## Declare Path
+This next chunk declares the path to this script relative to the project-level 
+root directory. If the file is not in the right location under the project root
+you'll get a warning message. This helps ensure relative paths are all working 
+as expected. 
+
+``` {r}
+#| label: declare-path
+
+# Declare path to this script relative to the project root directory.
+here::i_am(path = paste0(params$SourceDir, params$SourceFile))
+```
+
+## Load Packages
 Next we load R packages required for this script to work. 
 
 ```{r}
@@ -178,7 +199,9 @@ library(kableExtra)
 library(knitr)        # for kable()
 #opts_knit$set(eval.after = 'fig.cap') 
 options(kableExtra.latex.load_packages = FALSE)
-library(kableExtra)   
+library(kableExtra)
+library(piercer)          # for git_report(), which_latex().
+library(quarto)           # for quarto_version()
 ```
 
 \FloatBarrier
@@ -304,12 +327,51 @@ digraph D {
 \FloatBarrier
 
 # Software Information
-Show information about the current software environment. 
+We used [R](https://www.r-project.org/) as our main computing environment and 
+[Quarto](https://quarto.org/) scripts to enhance reproducibility. We used 
+[RStudio](www.rstudio.org) as the editor to interface with R and Quarto. 
 
-```{r}
+- Software chain:
+  **qmd file > RStudio > Quarto > R > knitr > md file > Pandoc > tex file > TinyTeX > PDF file**.
+- Source file: \texttt{\detokenize{`r params$SourceFile`}} 
+- Output file: \texttt{\detokenize{`r params$LogFile`}} 
+- [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through  
+  [R](https://www.r-project.org/) and [knitr](https://yihui.org/knitr/) to 
+  produce `*.md` markdown files.
+- [Pandoc `r rmarkdown::pandoc_version()`](https://pandoc.org) converts markdown 
+  files (`*.md`) to other formats, including LaTeX (`*.tex`) and HTML (`*.html`) 
+  among others.
+- [TinyTeX](https://yihui.org/tinytex/) compiles LaTeX files (`*.tex`) into PDF 
+  files. It should be viable to use [MiKTeX](https://miktex.org) or another 
+  LaTeX distribution instead. 
+
+\FloatBarrier
+
+## Versions
+This document was generated using the following computational environment and 
+dependencies: 
+
+``` {r}
 #| label: show-version
 #| cfsize: scriptsize
+#| echo: true
+
+# Check and report whether we used TinyTex or other LaTeX software. 
+which_latex()
 
 # Get R and R package version numbers in use.
-session_info()
+devtools::session_info()
+```
+
+\FloatBarrier
+
+## Git Details
+The current Git commit details and status are:
+
+``` {r}
+#| label: git-details
+#| cfsize: scriptsize
+#| echo: true
+
+git_report()
 ```
