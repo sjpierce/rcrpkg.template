@@ -1,5 +1,5 @@
 ---
-title: \sffamily{\bfseries{Example Script for Rendering PDF Output\LARGE}}
+title: \bfseries{Example Script for Rendering PDF Output\LARGE}
 author: 
   - name: Steven J. Pierce
     orcid: 0000-0002-0679-3019
@@ -73,13 +73,6 @@ format:
           \renewcommand{\headrulewidth}{0.4pt}
           \renewcommand{\footrulewidth}{0.4pt}
           \fancypagestyle{plain}{\pagestyle{fancy}}
-          \newcommand*\tocentryformat[1]{{\sffamily#1}}  %% Fix TOC font style
-          \RedeclareSectionCommands                      %% Fix TOC font style
-            [
-              tocentryformat=\tocentryformat,
-              tocpagenumberformat=\tocentryformat
-            ]
-            {section,subsection,subsubsection,paragraph,subparagraph}
 execute:
   eval: true
   echo: fenced
@@ -135,7 +128,7 @@ Quarto.
 # Setup
 Global R chunk options are defined in the YAML header but local chunk options 
 will over-ride global options. We can temporarily disable an individual chunk by 
-inserting `#| eval = FALSE` on a line at the top of the chunk. The method for
+inserting `#| eval: false` on a line at the top of the chunk. The method for
 creating a `cfsize` option that controls font size in code chunks and their text
 output is based on an answer to a question posted on
 [stackoverflow.com](https://stackoverflow.com/a/46526740).
@@ -169,6 +162,8 @@ message("test message 1")
 message("test message 2")
 ```
 
+\FloatBarrier
+
 ## Declare Path
 This next chunk declares the path to this script relative to the project-level 
 root directory. If the file is not in the right location under the project root
@@ -181,6 +176,8 @@ as expected.
 # Declare path to this script relative to the project root directory.
 here::i_am(path = paste0(params$SourceDir, params$SourceFile))
 ```
+
+\FloatBarrier
 
 ## Load Packages
 Next we load R packages required for this script to work. 
