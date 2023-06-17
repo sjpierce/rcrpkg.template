@@ -43,9 +43,6 @@ format:
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
           \usepackage{url}
-          \usepackage{floatrow}
-          \floatplacement{figure}{!ht}
-          \floatplacement{table}{!ht}
           \usepackage{verbatim}         %% For the comment command
           \usepackage{placeins}         %% For FloatBarrier command
           \usepackage{booktabs}         %% Used by kableExtra
