@@ -1,6 +1,11 @@
 ---
 title: "Setup a Research Compendium R Package" 
-author: "Steven J. Pierce" 
+author: 
+  - name: Steven J. Pierce
+    orcid: 0000-0002-0679-3019
+    email: pierces1@msu.edu
+    affiliations: 
+      - name: Michigan State University, Center for Statistical Training and Consulting
 date: now 
 date-modified: last-modified 
 date-format: YYYY-MM-DD HH:mm:ss z 
@@ -51,7 +56,7 @@ examples of the older approach.
 # Setup
 Global R chunk options are defined in the YAML header but local chunk options 
 will over-ride global options. We can temporarily disable an individual chunk by 
-inserting `#| eval = FALSE` on a line at the top of the chunk. 
+inserting `#| eval: false` on a line at the top of the chunk. 
 
 ``` {r}
 #| label: declare-path
@@ -318,12 +323,47 @@ download.file(url = "https://creativecommons.org/licenses/by-sa/4.0/legalcode.tx
 ```
 
 # Software Information
-Show information about the current software environment. 
+Show information about the current software environment. We could put the 
+contents of this section in a collapsed callout instead. 
 
-```{r}
+We used [R](https://www.r-project.org/) as our main computing environment and 
+[Quarto](https://quarto.org/) scripts to enhance reproducibility. We used 
+[RStudio](www.rstudio.org) as the editor to interface with R and Quarto. 
+
+- Software chain:
+  **qmd file > RStudio > Quarto > R > knitr > md file > Pandoc > HTML file**.
+- Source file: **`r params$SourceFile`**
+- Output file: **`r params$LogFile`**
+- [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through 
+  [R](https://www.r-project.org/) and [knitr](https://yihui.org/knitr/) to 
+  produce `*.md` markdown files.
+- [Pandoc `r rmarkdown::pandoc_version()`](https://pandoc.org) converts markdown 
+  files (`*.md`) to other formats, including LaTeX (`*.tex`) and HTML (`*.html`) 
+  among others.
+
+\FloatBarrier
+
+## Versions
+This document was generated using the following computational environment and 
+dependencies: 
+
+``` {r}
 #| label: show-version
-#| eval: false
+#| echo: true
 
 # Get R and R package version numbers in use.
-session_info()
+devtools::session_info()
 ```
+
+\FloatBarrier
+
+## Git Details
+The current Git commit details and status are:
+
+``` {r}
+#| label: git-details
+#| echo: true
+
+git_report()
+```
+
