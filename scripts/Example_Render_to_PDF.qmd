@@ -182,20 +182,16 @@ Next we load R packages required for this script to work.
 ```{r}
 #| label: load-packages
 
-# Load some packages
-library(devtools)   #  
-library(here)       # for here(), i_am()
+library(devtools)       
+library(here)         # for here(), i_am()
 library(dplyr)        # for %>%, arrange(), filter(), group_by(), mutate(), etc.
 library(tidyr)        # for pivot_longer(), pivot_wider(), etc.
 library(rmarkdown)    # for render()
-library(knitr)      
-library(kableExtra) 
 library(knitr)        # for kable()
-#opts_knit$set(eval.after = 'fig.cap') 
 options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)
-library(piercer)          # for git_report(), which_latex().
-library(quarto)           # for quarto_version()
+library(piercer)      # for git_report(), which_latex().
+library(quarto)       # for quarto_version()
 ```
 
 \FloatBarrier
@@ -329,7 +325,7 @@ We used [R](https://www.r-project.org/) as our main computing environment and
   **qmd file > RStudio > Quarto > R > knitr > md file > Pandoc > tex file > TinyTeX > PDF file**.
 - Source file: \texttt{\detokenize{`r params$SourceFile`}} 
 - Output file: \texttt{\detokenize{`r params$LogFile`}} 
-- [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through  
+- [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through 
   [R](https://www.r-project.org/) and [knitr](https://yihui.org/knitr/) to 
   produce `*.md` markdown files.
 - [Pandoc `r rmarkdown::pandoc_version()`](https://pandoc.org) converts markdown 

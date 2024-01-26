@@ -1,9 +1,18 @@
 ---
 title: "Example Script for Rendering HTML Output"
-author: "Steven J. Pierce"
+author: 
+  - name: Steven J. Pierce
+    orcid: 0000-0002-0679-3019
+    email: pierces1@msu.edu
+    affiliations: 
+      - name: Michigan State University, Center for Statistical Training and Consulting
 date: now
 date-modified: last-modified
 date-format: YYYY-MM-DD HH:mm:ss z
+params:
+  SourceDir: "scripts/"
+  SourceFile: "Example_Render_to_HTML.qmd"
+  LogFile: "Example_Render_to_HTML.html"
 format: 
   html:
     toc: true
@@ -36,43 +45,52 @@ Quarto.
 # Setup
 Global R chunk options are defined in the YAML header but local chunk options 
 will over-ride global options. We can temporarily disable an individual chunk by 
-inserting `#| eval = FALSE` on a line at the top of the chunk. 
+inserting `#| eval: false` on a line at the top of the chunk. 
 
 ``` {r}
-#| label: declare-path
-
-# Declare path to this script relative to the project root directory.
-here::i_am(path = "scripts/Example_Render_to_HTML.qmd")
+#| label: test-message1
 
 # This message should show in results because of global options in YAML. 
-message("test message")
+message("test message 1")
 ```
 
 ``` {r}
-#| label: test-message
+#| label: test-message2
 #| message: false
 
 # This message should not show in results because of chunk-level options. 
 message("test message 2")
 ```
 
+## Declare Path
+This next chunk declares the path to this script relative to the project-level 
+root directory. If the file is not in the right location under the project root
+you'll get a warning message. This helps ensure relative paths are all working 
+as expected. 
+
+``` {r}
+#| label: declare-path
+
+# Declare path to this script relative to the project root directory.
+here::i_am(path = paste0(params$SourceDir, params$SourceFile))
+```
+
+## Load Packages
 Next we load R packages required for this script to work. 
 
 ```{r}
 #| label: load-packages
 
-# Load some packages
-library(devtools)   #  
+library(devtools)   
 library(here)       # for here(), i_am()
-library(dplyr)        # for %>%, arrange(), filter(), group_by(), mutate(), etc.
-library(tidyr)        # for pivot_longer(), pivot_wider(), etc.
-library(rmarkdown)    # for render()
-library(knitr)      
-library(kableExtra) 
-library(knitr)        # for kable()
-#opts_knit$set(eval.after = 'fig.cap') 
+library(dplyr)      # for %>%, arrange(), filter(), group_by(), mutate(), etc.
+library(tidyr)      # for pivot_longer(), pivot_wider(), etc.
+library(rmarkdown)  # for render()
+library(knitr)      # for kable()
 options(kableExtra.latex.load_packages = FALSE)
-library(kableExtra)   
+library(kableExtra) 
+library(piercer)    # for git_report()
+library(quarto)     # for quarto_version()
 ```
 
 # Heading Level 1
@@ -177,9 +195,43 @@ digraph D {
 Show information about the current software environment. We could put the 
 contents of this section in a collapsed callout instead. 
 
-```{r}
+We used [R](https://www.r-project.org/) as our main computing environment and 
+[Quarto](https://quarto.org/) scripts to enhance reproducibility. We used 
+[RStudio](www.rstudio.org) as the editor to interface with R and Quarto. 
+
+- Software chain:
+  **qmd file > RStudio > Quarto > R > knitr > md file > Pandoc > HTML file**.
+- Source file: **`r params$SourceFile`**
+- Output file: **`r params$LogFile`**
+- [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through 
+  [R](https://www.r-project.org/) and [knitr](https://yihui.org/knitr/) to 
+  produce `*.md` markdown files.
+- [Pandoc `r rmarkdown::pandoc_version()`](https://pandoc.org) converts markdown 
+  files (`*.md`) to other formats, including LaTeX (`*.tex`) and HTML (`*.html`) 
+  among others.
+
+\FloatBarrier
+
+## Versions
+This document was generated using the following computational environment and 
+dependencies: 
+
+``` {r}
 #| label: show-version
+#| echo: true
 
 # Get R and R package version numbers in use.
-session_info()
+devtools::session_info()
+```
+
+\FloatBarrier
+
+## Git Details
+The current Git commit details and status are:
+
+``` {r}
+#| label: git-details
+#| echo: true
+
+git_report()
 ```
