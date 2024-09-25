@@ -171,20 +171,54 @@ use_description(check_name = TRUE)
 ```
 
 # Create README.Rmd and README.md Files 
-It is very useful for an R pacakge to have README files, which are described 
-at https://r-pkgs.org/release.html#important-files. You can use the 
-`create-README` chunk below to set up the initial `README.Rmd` file. You can 
+It is very useful for an R package to have README files, which are described 
+at https://r-pkgs.org/release.html#important-files. 
+
+The `usethis` package supports an easy way to create such files with 
+[R Markdown](https://rmarkdown.rstudio.com/) scripts. You can use the 
+`create-README-Rmd` chunk below to set up an initial `README.Rmd` file. You can 
 edit that file and then knit it to produce the `README.md` file. You should 
 track both the `README.Rmd` and `README.md` files in Git. For an example of 
-what I put in these files for a pacakge used as a research compendium, see 
-https://github.com/sjpierce/SSACHR. 
+what I put in these files for a package used as a research compendium, see 
+[https://github.com/sjpierce/SSACHR](https://github.com/sjpierce/SSACHR). 
 
 ```{r}
-#| label: create-README
+#| label: create-README-Rmd
 #| eval: false 
 
 # Create a README.Rmd file that will knit to README.md.  
 use_readme_rmd()
+```
+
+One effect of the chunkl above is that it configures a pre-commit hook for Git 
+that forces you to commit changes to both `README.Rmd` and `README.md` at the 
+same time. 
+
+[Quarto](https://quarto.org) is the next generation-successor to R Markdown, so 
+I now personally create my `README.md` files with a Quarto script called 
+`README.qmd` instead of the `README.Rmd` file created by the chunk above. I 
+still run the chunk above, but then just rename `README.Rmd` to `README.qmd` and 
+then edit the content to make it use Quarto code instead of R Markdown code. 
+
+```{r}
+#| label: move-pre-commit-hook
+#| eval: false 
+
+file_move(path = here("scripts/README.Rmd"), 
+          new_path = here("scripts/README.qmd"))
+```
+
+To get Git to require committing changes to both `README.qmd` and `README.md` 
+we use the following chunk to replace the pre-commit hook created by 
+`use_readme_rmd()` with one that references a Quarto file instead of an R 
+Markdown file. 
+
+```{r}
+#| label: move-pre-commit-hook
+#| eval: false 
+
+file_move(path = here("scripts/pre-commit"), 
+          new_path = here(".git/hooks/pre-commit"))
 ```
 
 # Create a NEWS.md File 
