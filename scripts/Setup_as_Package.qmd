@@ -190,7 +190,7 @@ what I put in these files for a package used as a research compendium, see
 use_readme_rmd()
 ```
 
-One effect of the chunkl above is that it configures a pre-commit hook for Git 
+One effect of the chunk above is that it configures a pre-commit hook for Git 
 that forces you to commit changes to both `README.Rmd` and `README.md` at the 
 same time. 
 
@@ -201,7 +201,7 @@ still run the chunk above, but then just rename `README.Rmd` to `README.qmd` and
 then edit the content to make it use Quarto code instead of R Markdown code. 
 
 ```{r}
-#| label: move-pre-commit-hook
+#| label: rename-README-Rmd
 #| eval: false 
 
 file_move(path = here("scripts/README.Rmd"), 
