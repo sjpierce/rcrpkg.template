@@ -206,10 +206,10 @@ and then track that file with Git.
 
 ```{r create-extdata-placeholder}
 # Create the folder
-dir_create(path = here("inst/extdata"))
+dir_create(path = here("scripts/extdata"))
 
 # Write out the placeholder file. 
-Placeholder.txt <- file(here("inst/extdata/Placeholder.txt"))
+Placeholder.txt <- file(here("scripts/extdata/Placeholder.txt"))
 Content <- paste("Tracking this file in Git automates creating the folder it", 
                  "is in when the repository is cloned.")
 writeLines(text = Content, con = Placeholder.txt)
