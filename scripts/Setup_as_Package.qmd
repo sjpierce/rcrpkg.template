@@ -204,8 +204,8 @@ then edit the content to make it use Quarto code instead of R Markdown code.
 #| label: rename-README-Rmd
 #| eval: false 
 
-file_move(path = here("scripts/README.Rmd"), 
-          new_path = here("scripts/README.qmd"))
+file_move(path = here("README.Rmd"), 
+          new_path = here("README.qmd"))
 ```
 
 To get Git to require committing changes to both `README.qmd` and `README.md` 
