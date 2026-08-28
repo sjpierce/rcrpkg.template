@@ -5,30 +5,30 @@ author:
     orcid: 0000-0002-0679-3019
     email: pierces1@msu.edu
     affiliations: 
-      - name: Michigan State University, Center for Statistical Training and Consulting
-date: now 
-date-modified: last-modified 
-date-format: YYYY-MM-DD HH:mm:ss z 
+      - name: Michigan State University, Center for Statistical Training and Consulting  ([https://cstat.msu.edu](https://cstat.msu.edu))
+date: now                             # Sets Date Published = when script is rendered
+date-modified: last-modified          # Sets Date Modified = when code was last saved
+date-format: YYYY-MM-DD HH:mm:ss z    # Show date, time, & timezone
 format: 
-  html: 
-    toc: true 
-    toc-depth: 3 
-    toc-location: left 
-    number-sections: true 
-    number-depth: 3 
-    code-fold: show 
-    code-tools: true 
-    code-line-numbers: true 
-    embed-resources: true 
-    anchor-sections: true 
+  html:                               # Settings for HTML output
+    toc: true                         # Include table of contents (TOC)
+    toc-depth: 3                      # Number of layers in TOC
+    toc-location: left                # Where to display the TOC
+    number-sections: true             # Auto-number each section
+    number-depth: 3                   # Number of layers for section numbering
+    code-fold: true                   # Default to collapsing code chunks
+    code-tools: true                  # Adds control for show/hide all code
+    code-line-numbers: false          # Skip numbering lines in code chunks
+    embed-resources: true             # Makes HTML output file self-contained
+    anchor-sections: true             # Allow linking to section headings
 execute: 
   eval: true 
-  echo: fenced 
+  echo: fenced                        # Show the code in the output file
   output: true 
   warning: true 
   error: true 
   include: true 
-knitr: 
+knitr:                                # Default R knitr package chunk options
   opts_chunk: 
     message: true 
 ---
@@ -40,17 +40,15 @@ https://github.com/sjpierce/rcrpkg.template.git
 and turning it into a full R package. It is intended to be a script that you
 use interactively. Examine each section below, look at what the next chunk does,
 edit is desired, and then run it. You will need to manually edit some of the 
-files created by certain chunks below. 
+files created by certain chunks below. It isn't necessary to save the output of 
+this script. 
 
 ::: {.callout-tip}
 # Quarto versus R Markdown
 Quarto is the successor to [R Markdown](https://rmarkdown.rstudio.com/). It 
 offers more features and so I have converted over to using Quarto for new
-projects. There are examples of both Quarto (`*.qmd` files) and R Markdown
-scripts (`*.Rmd` files) in this repository but I now prefer and recommend
-relying only on Quarto. If you intend to do that, you can delete the (`*.Rmd`
-files) from your repository. The R Markdown files are only here for historical
-examples of the older approach.
+projects. There are examples of other Quarto (`*.qmd` files) scripts in this 
+repository. 
 :::
 
 # Setup
@@ -94,10 +92,13 @@ Next we load R packages required for this script to work.
 
 # Load some packages
 library(available)  # for available()
-library(devtools)   #  
-library(fs)         # for dir_create()
+library(devtools)   # for document(), session_info()
+library(fs)         # for dir_create(), file_move()
 library(here)       # for here(), i_am()
-library(usethis)    # 
+library(usethis)    # for use_description(), use_gpl_license(), use_news_md(),
+                    # use_package_doc(), use_proprietary_license(), 
+                    # use_readme_rmd()
+library(piercer)    # for git_report()
 ```
 
 # Check Candidate Package Names
