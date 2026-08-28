@@ -5,34 +5,37 @@ author:
     orcid: 0000-0002-0679-3019
     email: pierces1@msu.edu
     affiliations: 
-      - name: Michigan State University, Center for Statistical Training and Consulting
-date: now
-date-modified: last-modified
-date-format: YYYY-MM-DD HH:mm:ss z
+      - name: Michigan State University, Center for Statistical Training and Consulting  ([https://cstat.msu.edu](https://cstat.msu.edu))
+bibliography: references.bib          # File holds BibTeX data for references
+csl: apa.csl                          # File controls citation & reference list 
 params:
-  SourceDir: "scripts/"
-  SourceFile: "Example_Render_to_HTML.qmd"
-  LogFile: "Example_Render_to_HTML.html"
+  SourceDir: "scripts/"               # Relative path to folder holding this file
+  SourceFile: "Example_Render_to_HTML.qmd"  # Name of this script file
+  LogFile: "Example_Render_to_HTML.html"    # Default name of rendered output file
+date: now                             # Sets Date Published = when script is rendered
+date-modified: last-modified          # Sets Date Modified = when code was last saved
+date-format: YYYY-MM-DD HH:mm:ss z    # Show date, time, & timezone
 format: 
-  html:
-    toc: true
-    toc-depth: 3
-    toc-location: left
-    number-sections: true
-    number-depth: 3
-    code-fold: show
-    code-tools: true
-    code-line-numbers: false
-    embed-resources: true 
-    anchor-sections: true
-execute:
+  html:                               # Settings for HTML output
+    output-file: "Example_Render_to_HTML.html"  # Default output file name
+    toc: true                         # Include table of contents (TOC)
+    toc-depth: 3                      # Number of layers in TOC
+    toc-location: left                # Where to display the TOC
+    number-sections: true             # Auto-number each section
+    number-depth: 3                   # Number of layers for section numbering
+    code-fold: true                   # Default to collapsing code chunks
+    code-tools: true                  # Adds control for show/hide all code
+    code-line-numbers: false          # Skip numbering lines in code chunks
+    embed-resources: true             # Makes HTML output file self-contained
+    anchor-sections: true             # Allow linking to section headings
+execute:                              # Default Quarto chunk execution options
   eval: true
-  echo: fenced
+  echo: fenced                        # Show the code in the output file
   output: true
   warning: true
   error: true
   include: true
-knitr:
+knitr:                                # Default R knitr package chunk options
   opts_chunk: 
     message: true
 ---
@@ -83,8 +86,10 @@ Next we load R packages required for this script to work.
 
 library(devtools)   
 library(here)       # for here(), i_am()
-library(dplyr)      # for %>%, arrange(), filter(), group_by(), mutate(), etc.
-library(tidyr)      # for pivot_longer(), pivot_wider(), etc.
+library(tidyverse)  # loads dplyr, forcats, ggplot2, lubridate, purrr, readr, 
+                    # stringr, tibble, and tidyr all at once. 
+                    # for arrange(), filter(), group_by(), mutate(), 
+                    # pivot_longer(), pivot_wider(), etc.
 library(rmarkdown)  # for render()
 library(knitr)      # for kable()
 options(kableExtra.latex.load_packages = FALSE)
@@ -94,7 +99,12 @@ library(quarto)     # for quarto_version()
 ```
 
 # Heading Level 1
-Put text here. 
+Put text here. Here's an example of citing a paper so you can see how the 
+reference list gets populated: @Bryan-RN3900 is a very useful overview of why 
+you should use version control tools. The citation data about the that paper is 
+in the file identified by the `bibliography:` key in the YAML header. The file
+identified by the `csl:` key in the YAML header controls how in-text citations 
+and reference list entries are formatted. 
 
 ## Heading Level 2
 Put text here. 
@@ -134,8 +144,6 @@ This is an example of a 'folded' caution callout that can be expanded by the
 user. You can use `collapse="true"` to collapse it by default or
 `collapse="false"` to make a collapsible callout that is expanded by default.
 :::
-
-
 
 # Example Table
 See @tbl-Test for an example of the table created below. 
@@ -201,8 +209,8 @@ We used [R](https://www.r-project.org/) as our main computing environment and
 
 - Software chain:
   **qmd file > RStudio > Quarto > R > knitr > md file > Pandoc > HTML file**.
-- Source file: **`r params$SourceFile`**
-- Output file: **`r params$LogFile`**
+- Source file: **`{r} paste0(params$SourceDir, params$SourceFile)`**
+- Output file: **`{r} paste0(params$SourceDir, "output/", params$LogFile)`**
 - [Quarto `r quarto_version()`](https://quarto.org/) runs `*.qmd` files through 
   [R](https://www.r-project.org/) and [knitr](https://yihui.org/knitr/) to 
   produce `*.md` markdown files.
@@ -218,7 +226,7 @@ dependencies:
 
 ``` {r}
 #| label: show-version
-#| echo: true
+#| echo: fenced
 
 # Get R and R package version numbers in use.
 devtools::session_info()
@@ -231,7 +239,21 @@ The current Git commit details and status are:
 
 ``` {r}
 #| label: git-details
-#| echo: true
+#| echo: fenced
 
 git_report()
 ```
+
+This is useful because it tells us which commit in the Git history we would need
+to be using to make sure we are running the exact same code. Sometimes another
+person is not using the most current code, or has changed the code in some way
+since it was last committed.
+
+::: {.callout-tip}
+* Untracked files are files located in the repository that Git has not been told 
+  to entirely ignore, but have also not been committed into the version history. 
+* Unstaged changes to files indicate that some of the contents have been 
+  modified since the last time the file was committed to Git. In production 
+  runs, we want the Git output to not show any unstaged changes to key files!
+
+::: 

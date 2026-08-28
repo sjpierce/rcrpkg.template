@@ -1,35 +1,40 @@
 ---
-title: \bfseries{Example Script for Rendering PDF Output\LARGE}
+title: "Example Script for Rendering PDF Output"
 author: 
   - name: Steven J. Pierce
     orcid: 0000-0002-0679-3019
     email: pierces1@msu.edu
-    affiliations: 
-      - name: Michigan State University, Center for Statistical Training and Consulting
+    affil-id: 1
+affiliations: 
+  - id: 1
+    name: Michigan State University, Center for Statistical Training and Consulting  ([https://cstat.msu.edu](https://cstat.msu.edu))
+execute-dir: file
+bibliography: references.bib              # File holds BibTeX data for references
+csl: apa.csl                              # File controls citation & reference list 
 params:
-  SourceDir: "scripts/"
-  SourceFile: "Example_Render_to_PDF.qmd"
-  LogFile: "Example_Render_to_PDF.pdf"
+  SourceDir: "scripts/"                    # Relative path to folder holding this file
+  SourceFile: "Example_Render_to_PDF.qmd"  # Name of this script file
+  LogFile: "Example_Render_to_PDF.pdf"     # Default name of rendered output file
 format: 
-  pdf:
-    output-file: "Example_Render_to_PDF.pdf"
+  pdf:                                       # Settings for pdf output
+    output-file: "Example_Render_to_PDF.pdf" # Default output file name
     output-ext: "pdf"
     documntclass: scrartcl
     papersize: letter
-    geometry: 
+    geometry:                                # Specify page margins
       - top=1in
       - bottom=1in
       - left=1in
       - right=1in
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    number-depth: 3
-    colorlinks: true
+    number-sections: true                       # Whether to auto-number each section
+    number-depth: 3                             # No. of layers in section numbers
+    toc: true                                   # Whether to include TOC
+    toc-depth: 3                                # No. of layers in TOC
+    colorlinks: true                            # Whether to color URLs
     template-partials: 
-      - title.tex
+      - Latex_Partials/title.tex
     include-in-header: 
-      - file: compact-title.tex
+      - file: Latex_Partials/compact-title.tex
       - text: | 
           \usepackage{fancyhdr}
           \usepackage[noblocks]{authblk}
@@ -38,28 +43,27 @@ format:
           \renewcommand*{\Authands}{, }
           \renewcommand\Affilfont{\small}
           \usepackage[yyyymmdd,hhmmss]{datetime}
-          \usepackage{lastpage}         %% For pageref command
+          \usepackage{lastpage}        %% For pageref command
           \usepackage{fontspec}
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
-          \usepackage{url}
-          \usepackage{verbatim}         %% For the comment command
-          \usepackage{placeins}         %% For FloatBarrier command
-          \usepackage{booktabs}         %% Used by kableExtra
-          \usepackage{longtable}        %% Used by kableExtra
-          \usepackage{array}            %% Used by kableExtra
-          \usepackage{multirow}         %% Used by kableExtra
-          \usepackage{wrapfig}          %% Used by kableExtra
-          \usepackage{colortbl}         %% Used by kableExtra
-          \usepackage{pdflscape}        %% Used by kableExtra
-          \usepackage{tabu}             %% Used by kableExtra
-          \usepackage[normalem]{ulem}   %% Used by kableExtra
-          \usepackage{makecell}         %% Used by kableExtra
-          \usepackage{xcolor}           %% Used by kableExtra
-          \usepackage{dcolumn}
-          \usepackage{titling}
-          \usepackage{threeparttable}   %% Used by kableExtra
-          \usepackage{threeparttablex}  %% Used by kableExtra
+          \usepackage{placeins}        %% For FloatBarrier command
+          \usepackage{booktabs}        %% Used by kableExtra
+          \usepackage{longtable}       %% Used by kableExtra
+          \usepackage{multirow}        %% Used by kableExtra
+          \usepackage{wrapfig}         %% Used by kableExtra
+          \usepackage{colortbl}        %% Used by kableExtra
+          \usepackage{pdflscape}       %% Used by kableExtra
+          \usepackage{tabu}            %% Used by kableExtra
+          \usepackage[normalem]{ulem}  %% Used by kableExtra
+          \usepackage{makecell}        %% Used by kableExtra
+          \usepackage{xcolor}          %% Used by kableExtra
+          \usepackage{dcolumn}         %% Used by kableExtra
+          \usepackage{titling}      
+          \usepackage{threeparttable}  %% Used by kableExtra
+          \usepackage{threeparttablex} %% Used by kableExtra
+          \usepackage{verbatim}        %% For comment command
+          \usepackage{here}
           \pretitle{\begin{center}\LARGE\bfseries}
           \posttitle{\end{center}}
           \pagestyle{fancy}
@@ -118,7 +122,7 @@ sections.
 # Purpose
 This script provides a template example you can use to jump-start creating a 
 new report that writes PDF output. It illustrates some convenient features of
-Quarto.
+Quarto. 
 
 \FloatBarrier
 
@@ -182,11 +186,13 @@ Next we load R packages required for this script to work.
 ```{r}
 #| label: load-packages
 
-library(devtools)       
+library(devtools)     # for session_info()
 library(here)         # for here(), i_am()
-library(dplyr)        # for %>%, arrange(), filter(), group_by(), mutate(), etc.
-library(tidyr)        # for pivot_longer(), pivot_wider(), etc.
-library(rmarkdown)    # for render()
+library(tidyverse)    # loads dplyr, forcats, ggplot2, lubridate, purrr, readr, 
+                      # stringr, tibble, and tidyr all at once. 
+                      # for arrange(), filter(), group_by(), mutate(), 
+                      # pivot_longer(), pivot_wider(), etc.
+library(rmarkdown)    # for pandoc_version()
 library(knitr)        # for kable()
 options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)
@@ -197,7 +203,12 @@ library(quarto)       # for quarto_version()
 \FloatBarrier
 
 # Heading Level 1
-Put text here. 
+Put text here. Here's an example of citing a paper so you can see how the 
+reference list gets populated: @Bryan-RN3900 is a very useful overview of why 
+you should use version control tools. The citation data about the that paper is 
+in the file identified by the `bibliography:` key in the YAML header. The file
+identified by the `csl:` key in the YAML header controls how in-text citations 
+and reference list entries are formatted. 
 
 \FloatBarrier
 
@@ -313,6 +324,12 @@ digraph D {
   A -> {B, C, D} -> {F}
 }
 ```
+
+\FloatBarrier
+
+# References
+::: {#refs}
+:::
 
 \FloatBarrier
 
