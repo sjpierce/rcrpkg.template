@@ -9,8 +9,8 @@ affiliations:
   - id: 1
     name: Michigan State University, Center for Statistical Training and Consulting  ([https://cstat.msu.edu](https://cstat.msu.edu))
 execute-dir: file
-bibliography: references.bib              # File holds BibTeX data for references
-csl: apa.csl                              # File controls citation & reference list 
+bibliography: references.bib               # File holds BibTeX data for references
+csl: apa.csl                               # Citation style formatting rules  
 params:
   SourceDir: "scripts/"                    # Relative path to folder holding this file
   SourceFile: "Example_Render_to_PDF.qmd"  # Name of this script file
@@ -19,7 +19,7 @@ format:
   pdf:                                       # Settings for pdf output
     output-file: "Example_Render_to_PDF.pdf" # Default output file name
     output-ext: "pdf"
-    documntclass: scrartcl
+    documentclass: scrartcl                  # LaTeX document type (KOMA-Script)
     papersize: letter
     geometry:                                # Specify page margins
       - top=1in
@@ -42,14 +42,23 @@ format:
           \renewcommand*{\Authand}{, }
           \renewcommand*{\Authands}{, }
           \renewcommand\Affilfont{\small}
-          \usepackage[yyyymmdd,hhmmss]{datetime}
-          \usepackage{lastpage}        %% For pageref command
+          \usepackage[yyyymmdd,hhmmss]{datetime} %% for currenttime command
+          \usepackage{lastpage}                  %% For pageref command
           \usepackage{fontspec}
           \defaultfontfeatures{Ligatures=TeX}
           \usepackage[font={small}, margin=1cm, skip=2pt]{caption}
+          \usepackage{url}
+          \usepackage{floatrow}                     %% For controlling float placement
+          \floatsetup[table]{capposition=top}        %% Puts table caption at top.
+          \floatsetup[longtable]{margins=centering}  %% Centers longtable tables
+          \floatplacement{figure}{!ht}               %% Control placement of figures
+          \floatplacement{table}{!ht}                %% Control placement of tables
+          \usepackage[labelfont=bf, textfont=bf]{caption} %% For bolded table/figure captions
+          
           \usepackage{placeins}        %% For FloatBarrier command
           \usepackage{booktabs}        %% Used by kableExtra
           \usepackage{longtable}       %% Used by kableExtra
+          \usepackage{array}           %% Used by kableExtra
           \usepackage{multirow}        %% Used by kableExtra
           \usepackage{wrapfig}         %% Used by kableExtra
           \usepackage{colortbl}        %% Used by kableExtra
@@ -59,12 +68,13 @@ format:
           \usepackage{makecell}        %% Used by kableExtra
           \usepackage{xcolor}          %% Used by kableExtra
           \usepackage{dcolumn}         %% Used by kableExtra
-          \usepackage{titling}      
           \usepackage{threeparttable}  %% Used by kableExtra
           \usepackage{threeparttablex} %% Used by kableExtra
+          \usepackage{amsmath}         %% for equation support
+          \usepackage{titling}      
           \usepackage{verbatim}        %% For comment command
           \usepackage{here}
-          \pretitle{\begin{center}\LARGE\bfseries}
+          \pretitle{\begin{center}\LARGE\bfseries\sffamily}
           \posttitle{\end{center}}
           \pagestyle{fancy}
           \lhead{Left header text }
@@ -74,6 +84,13 @@ format:
           \renewcommand{\headrulewidth}{0.4pt}
           \renewcommand{\footrulewidth}{0.4pt}
           \fancypagestyle{plain}{\pagestyle{fancy}}
+          \newcommand*\tocentryformat[1]{{\sffamily#1}}  %% Fix TOC font style
+          \RedeclareSectionCommands                      %% Fix TOC font style
+            [
+              tocentryformat=\tocentryformat,
+              tocpagenumberformat=\tocentryformat
+            ]
+            {section,subsection,subsubsection,paragraph,subparagraph}
 execute:
   eval: true
   echo: fenced
@@ -91,11 +108,8 @@ knitr:
 \begin{comment}
 # Hidden: Notes for User
 This script makes use of the LaTeX `verbatim` package's `\comment` command to
-build in hidden headings and text that are here for the team preparing the
-report but will be omitted from the knitted PDF output file. This makes it
-easier to put important comments directly in the file while still creating fully
-formatted output that only shows the desired content. So, text inside a comment
-block will be omitted from the PDF output.
+build in hidden headings and text that are useful while editing the script but 
+will be omitted from the knitted PDF output file. 
 
 We can also use code chunks with chunk options such as `#| include: false`, 
 `#| echo: false`, `#| message: false`, `#| warning: false` and so on to 
@@ -110,8 +124,8 @@ Ideally it would be in the YAML `include-in-header:` with other pieces, but
 I can't get inline code to work if I do it that way. This is the only way I 
 could get the filename-based footer to work. 
 
-The LaTeX `placeins` pacakg provides the `\FloatBarrier` command. Using that 
-before section headings help keep the figures and tables in their respective 
+The LaTeX `placeins` package provides the `\FloatBarrier` command. Using that 
+before section headings helps keep the figures and tables in their respective 
 sections. 
 \end{comment}
 
